@@ -1,0 +1,25 @@
+/* Brand webfonts — Montserrat (headings) + Inter (body/UI), per the design
+   system. Pulled from Google Fonts at runtime; this is an internal admin
+   panel so a network font fetch is acceptable. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap');
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #faf7f2; /* --paper */
+  color: #1e2a32; /* --ink-900 */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+}

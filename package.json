@@ -1,0 +1,37 @@
+{
+  "name": "tezbozor-admin-panel",
+  "version": "0.0.1",
+  "description": "Tezbozor admin panel — Refine + Ant Design (operators dashboard)",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.2",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "gen:api": "openapi-typescript http://localhost:3000/api/docs-json -o src/api/schema.d.ts"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.5.2",
+    "@refinedev/antd": "^5.45.0",
+    "@refinedev/core": "^4.57.0",
+    "@refinedev/react-router-v6": "^4.6.0",
+    "@refinedev/simple-rest": "^5.0.10",
+    "antd": "^5.23.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "openapi-typescript": "^7.5.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7"
+  }
+}
