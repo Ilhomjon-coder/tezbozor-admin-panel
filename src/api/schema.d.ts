@@ -20,6 +20,548 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Current customer profile */
+        get: operations["MeController_getMe"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update name / phone (onboarding) */
+        patch: operations["MeController_updateMe"];
+        trace?: never;
+    };
+    "/api/me/addresses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["MeController_listAddresses"];
+        put?: never;
+        post: operations["MeController_createAddress"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/addresses/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["MeController_deleteAddress"];
+        options?: never;
+        head?: never;
+        patch: operations["MeController_updateAddress"];
+        trace?: never;
+    };
+    "/api/me/favorites": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Doimiy ro'yxatim — saved staples with today's price */
+        get: operations["MeController_listFavorites"];
+        put?: never;
+        post: operations["MeController_addFavorite"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/favorites/{productId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["MeController_removeFavorite"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Admin login → access token (refresh set as an httpOnly cookie) */
+        post: operations["AdminAuthController_login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/auth/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rotate the refresh cookie → new access token */
+        post: operations["AdminAuthController_refresh"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Revoke the refresh token and clear the cookie */
+        post: operations["AdminAuthController_logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Current admin */
+        get: operations["AdminAuthController_me"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List categories */
+        get: operations["CatalogController_categories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/products": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Products with today's price (filter by category / search / cheapest-first) */
+        get: operations["CatalogController_products"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/products/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Product detail */
+        get: operations["CatalogController_product"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Search products by name */
+        get: operations["CatalogController_search"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/wishes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record an unmatched search (demand research) */
+        post: operations["CatalogController_wish"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/slots": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Delivery slots for the current delivery date (post-21:00 aware) */
+        get: operations["SlotsController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Customer's orders (newest first) */
+        get: operations["OrdersController_list"];
+        put?: never;
+        /** Place an order (server recomputes money; atomic slot reservation) */
+        post: operations["OrdersController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/orders/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Order detail with items, slot, address, rating */
+        get: operations["OrdersController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/orders/{id}/reorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Re-priced cart preview for "Qayta buyurtma berish" (price drift flagged) */
+        post: operations["OrdersController_reorder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/orders/{id}/rating": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rate a delivered order (1–5 stars) */
+        post: operations["OrdersController_rate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List orders (filter by delivery date / status / slot; newest first) */
+        get: operations["AdminOrdersController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/orders/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Order detail with items, status timeline, and recomputed totals */
+        get: operations["AdminOrdersController_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/orders/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Transition order status (enforces the state machine; 409 if illegal) */
+        patch: operations["AdminOrdersController_updateStatus"];
+        trace?: never;
+    };
+    "/api/admin/orders/{id}/items/{itemId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Adjust an item (status + adjusted price); server recomputes the total */
+        patch: operations["AdminOrdersController_updateItem"];
+        trace?: never;
+    };
+    "/api/admin/daily-prices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Pricing board: active products + a date's price (null if unset) */
+        get: operations["AdminPricingController_board"];
+        put?: never;
+        /** Bulk upsert prices for a date (idempotent on product+date) */
+        post: operations["AdminPricingController_bulkUpsert"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/products": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List products (active and inactive) with category name */
+        get: operations["AdminProductsController_list"];
+        put?: never;
+        post: operations["AdminProductsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/products/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["AdminProductsController_get"];
+        put?: never;
+        post?: never;
+        delete: operations["AdminProductsController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["AdminProductsController_update"];
+        trace?: never;
+    };
+    "/api/admin/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List categories */
+        get: operations["AdminCategoriesController_list"];
+        put?: never;
+        post: operations["AdminCategoriesController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/categories/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["AdminCategoriesController_get"];
+        put?: never;
+        post?: never;
+        delete: operations["AdminCategoriesController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["AdminCategoriesController_update"];
+        trace?: never;
+    };
+    "/api/admin/slots": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List delivery slots (optionally by date) */
+        get: operations["AdminSlotsController_list"];
+        put?: never;
+        /** Create a slot (only the two contract labels are accepted) */
+        post: operations["AdminSlotsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/slots/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["AdminSlotsController_get"];
+        put?: never;
+        post?: never;
+        delete: operations["AdminSlotsController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["AdminSlotsController_update"];
+        trace?: never;
+    };
+    "/api/admin/route": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Delivery route: a date's orders grouped by slot (defaults to today) */
+        get: operations["AdminRouteController_route"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Upload a product image (multipart field "file") → public URL */
+        post: operations["AdminUploadsController_upload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -37,6 +579,454 @@ export interface components {
              * @example 2026-06-13T18:00:00.000Z
              */
             timestamp: string;
+        };
+        ProfileDto: {
+            id: number;
+            tgId: number;
+            name: string | null;
+            phone: string | null;
+        };
+        UpdateProfileDto: {
+            name?: string;
+            phone?: string;
+        };
+        AddressDto: {
+            id: number;
+            mahalla: string;
+            house: string;
+            landmark: string | null;
+            isDefault: boolean;
+        };
+        CreateAddressDto: {
+            mahalla: string;
+            house: string;
+            landmark?: string;
+            isDefault?: boolean;
+        };
+        UpdateAddressDto: {
+            mahalla?: string;
+            house?: string;
+            landmark?: string;
+            isDefault?: boolean;
+        };
+        FavoriteDto: {
+            productId: number;
+            nameUz: string;
+            /** @enum {string} */
+            unit: "kg" | "dona";
+            imageUrl: string | null;
+            isActive: boolean;
+            todayPriceUzs: number | null;
+            addedAt: string;
+        };
+        AddFavoriteDto: {
+            productId: number;
+        };
+        AdminLoginDto: {
+            username: string;
+            password: string;
+        };
+        AccessTokenDto: {
+            accessToken: string;
+        };
+        AdminMeDto: {
+            id: number;
+            username: string;
+        };
+        CategoryDto: {
+            id: number;
+            slug: string;
+            nameUz: string;
+            sortOrder: number;
+        };
+        ProductDto: {
+            id: number;
+            categoryId: number;
+            nameUz: string;
+            /** @enum {string} */
+            unit: "kg" | "dona";
+            imageUrl: string | null;
+            /** @enum {string|null} */
+            badge: "yangi_keldi" | "narxi_barqaror" | null;
+            isProductOfDay: boolean;
+            priceUzs: number | null;
+        };
+        CreateWishDto: {
+            text: string;
+        };
+        WishDto: {
+            id: number;
+            text: string;
+            createdAt: string;
+        };
+        SlotsResponseDto: {
+            deliveryDate: string;
+            slots: {
+                id: number;
+                label: string;
+                capacity: number;
+                takenCount: number;
+                isOpen: boolean;
+                isFull: boolean;
+                isMostChosen: boolean;
+            }[];
+        };
+        CreateOrderDto: {
+            addressId: number;
+            slotId: number;
+            /**
+             * @default cash
+             * @enum {string}
+             */
+            paymentMethod: "cash" | "click" | "payme";
+            customerNote?: string;
+            items: {
+                productId: number;
+                qty: unknown;
+                /** @enum {string} */
+                fallback?: "substitute" | "skip" | "call";
+                itemNote?: string;
+            }[];
+        };
+        OrderDetailDto: {
+            id: number;
+            /** @enum {string} */
+            status: "accepted" | "shopping" | "on_the_way" | "delivered" | "cancelled";
+            itemsTotalUzs: number;
+            deliveryFeeUzs: number;
+            grandTotalUzs: number;
+            /** @enum {string} */
+            paymentMethod: "cash" | "click" | "payme";
+            /** @enum {string} */
+            paymentStatus: "pending" | "paid" | "refunded" | "failed";
+            customerNote: string | null;
+            createdAt: string;
+            slot: {
+                id: number;
+                date: string;
+                label: string;
+            } | null;
+            address: {
+                id: number;
+                mahalla: string;
+                house: string;
+                landmark: string | null;
+            } | null;
+            items: {
+                id: number;
+                productId: number;
+                nameSnapshot: string;
+                /** @enum {string} */
+                unit: "kg" | "dona";
+                qty: string;
+                priceSnapshotUzs: number;
+                lineTotalUzs: number;
+                /** @enum {string} */
+                fallback: "substitute" | "skip" | "call";
+                itemNote: string | null;
+                /** @enum {string} */
+                itemStatus: "pending" | "bought" | "substituted" | "skipped";
+                adjustedPriceUzs: number | null;
+            }[];
+            rating: {
+                stars: number;
+                comment: string | null;
+                createdAt: string;
+            } | null;
+        };
+        OrderSummaryDto: {
+            id: number;
+            /** @enum {string} */
+            status: "accepted" | "shopping" | "on_the_way" | "delivered" | "cancelled";
+            itemsTotalUzs: number;
+            deliveryFeeUzs: number;
+            grandTotalUzs: number;
+            /** @enum {string} */
+            paymentMethod: "cash" | "click" | "payme";
+            /** @enum {string} */
+            paymentStatus: "pending" | "paid" | "refunded" | "failed";
+            customerNote: string | null;
+            createdAt: string;
+            slot: {
+                id: number;
+                date: string;
+                label: string;
+            } | null;
+        };
+        ReorderPreviewDto: {
+            items: {
+                productId: number;
+                nameSnapshot: string;
+                /** @enum {string} */
+                unit: "kg" | "dona";
+                qty: string;
+                previousPriceUzs: number;
+                todayPriceUzs: number | null;
+                available: boolean;
+                priceChanged: boolean;
+            }[];
+        };
+        RateOrderDto: {
+            stars: number;
+            comment?: string;
+        };
+        RatingDto: {
+            stars: number;
+            comment: string | null;
+            createdAt: string;
+        };
+        AdminOrderSummaryDto: {
+            id: number;
+            /** @enum {string} */
+            status: "accepted" | "shopping" | "on_the_way" | "delivered" | "cancelled";
+            /** @enum {string} */
+            paymentMethod: "cash" | "click" | "payme";
+            /** @enum {string} */
+            paymentStatus: "pending" | "paid" | "refunded" | "failed";
+            itemsTotalUzs: number;
+            deliveryFeeUzs: number;
+            grandTotalUzs: number;
+            customerNote: string | null;
+            createdAt: string;
+            slot: {
+                id: number;
+                date: string;
+                label: string;
+            } | null;
+            customer: {
+                id: number;
+                name: string | null;
+                phone: string | null;
+            };
+            address: {
+                id: number;
+                mahalla: string;
+                house: string;
+                landmark: string | null;
+            } | null;
+            itemCount: number;
+            recalc: {
+                adjustedItemsTotalUzs: number;
+                adjustedGrandTotalUzs: number;
+                refundDeltaUzs: number;
+                cashToCollectUzs: number;
+                overageUzs: number;
+            };
+            allowedTransitions: ("accepted" | "shopping" | "on_the_way" | "delivered" | "cancelled")[];
+        };
+        AdminOrderDetailDto: {
+            id: number;
+            /** @enum {string} */
+            status: "accepted" | "shopping" | "on_the_way" | "delivered" | "cancelled";
+            /** @enum {string} */
+            paymentMethod: "cash" | "click" | "payme";
+            /** @enum {string} */
+            paymentStatus: "pending" | "paid" | "refunded" | "failed";
+            itemsTotalUzs: number;
+            deliveryFeeUzs: number;
+            grandTotalUzs: number;
+            customerNote: string | null;
+            createdAt: string;
+            slot: {
+                id: number;
+                date: string;
+                label: string;
+            } | null;
+            customer: {
+                id: number;
+                name: string | null;
+                phone: string | null;
+            };
+            address: {
+                id: number;
+                mahalla: string;
+                house: string;
+                landmark: string | null;
+            } | null;
+            itemCount: number;
+            recalc: {
+                adjustedItemsTotalUzs: number;
+                adjustedGrandTotalUzs: number;
+                refundDeltaUzs: number;
+                cashToCollectUzs: number;
+                overageUzs: number;
+            };
+            allowedTransitions: ("accepted" | "shopping" | "on_the_way" | "delivered" | "cancelled")[];
+            items: {
+                id: number;
+                productId: number;
+                nameSnapshot: string;
+                /** @enum {string} */
+                unit: "kg" | "dona";
+                qty: string;
+                priceSnapshotUzs: number;
+                lineTotalUzs: number;
+                /** @enum {string} */
+                fallback: "substitute" | "skip" | "call";
+                itemNote: string | null;
+                /** @enum {string} */
+                itemStatus: "pending" | "bought" | "substituted" | "skipped";
+                adjustedPriceUzs: number | null;
+                effectiveLineTotalUzs: number;
+            }[];
+            statusEvents: {
+                /** @enum {string} */
+                fromStatus: "accepted" | "shopping" | "on_the_way" | "delivered" | "cancelled";
+                /** @enum {string} */
+                toStatus: "accepted" | "shopping" | "on_the_way" | "delivered" | "cancelled";
+                adminUsername: string | null;
+                note: string | null;
+                createdAt: string;
+            }[];
+        };
+        UpdateOrderStatusDto: {
+            /** @enum {string} */
+            status: "accepted" | "shopping" | "on_the_way" | "delivered" | "cancelled";
+            note?: string;
+        };
+        UpdateOrderItemDto: {
+            /** @enum {string} */
+            itemStatus?: "pending" | "bought" | "substituted" | "skipped";
+            adjustedPriceUzs?: number | null;
+        };
+        DailyPriceBoardDto: {
+            date: string;
+            rows: {
+                productId: number;
+                nameUz: string;
+                /** @enum {string} */
+                unit: "kg" | "dona";
+                categoryId: number;
+                categoryNameUz: string;
+                sortOrder: number;
+                priceUzs: number | null;
+            }[];
+        };
+        BulkDailyPriceDto: {
+            date: string;
+            prices: {
+                productId: number;
+                priceUzs: number;
+            }[];
+        };
+        AdminProductDto: {
+            id: number;
+            categoryId: number;
+            categoryNameUz: string;
+            nameUz: string;
+            /** @enum {string} */
+            unit: "kg" | "dona";
+            imageUrl: string | null;
+            isActive: boolean;
+            /** @enum {string|null} */
+            badge: "yangi_keldi" | "narxi_barqaror" | null;
+            isProductOfDay: boolean;
+            sortOrder: number;
+        };
+        CreateProductDto: {
+            categoryId: number;
+            nameUz: string;
+            /** @enum {string} */
+            unit: "kg" | "dona";
+            imageUrl?: string | null;
+            isActive?: boolean;
+            /** @enum {string|null} */
+            badge?: "yangi_keldi" | "narxi_barqaror" | null;
+            isProductOfDay?: boolean;
+            sortOrder?: number;
+        };
+        UpdateProductDto: {
+            categoryId?: number;
+            nameUz?: string;
+            /** @enum {string} */
+            unit?: "kg" | "dona";
+            imageUrl?: string | null;
+            isActive?: boolean;
+            /** @enum {string|null} */
+            badge?: "yangi_keldi" | "narxi_barqaror" | null;
+            isProductOfDay?: boolean;
+            sortOrder?: number;
+        };
+        AdminCategoryDto: {
+            id: number;
+            slug: string;
+            nameUz: string;
+            sortOrder: number;
+        };
+        CreateCategoryDto: {
+            slug: string;
+            nameUz: string;
+            sortOrder?: number;
+        };
+        UpdateCategoryDto: {
+            slug?: string;
+            nameUz?: string;
+            sortOrder?: number;
+        };
+        AdminSlotDto: {
+            id: number;
+            date: string;
+            label: string;
+            capacity: number;
+            takenCount: number;
+            isOpen: boolean;
+        };
+        CreateSlotDto: {
+            date: string;
+            /** @enum {string} */
+            label: "09:00–11:00" | "11:00–13:00";
+            capacity: number;
+            isOpen?: boolean;
+        };
+        UpdateSlotDto: {
+            date?: string;
+            /** @enum {string} */
+            label?: "09:00–11:00" | "11:00–13:00";
+            capacity?: number;
+            isOpen?: boolean;
+        };
+        RouteBoardDto: {
+            date: string;
+            slots: {
+                id: number;
+                label: string;
+                capacity: number;
+                takenCount: number;
+                orders: {
+                    id: number;
+                    /** @enum {string} */
+                    status: "accepted" | "shopping" | "on_the_way" | "delivered" | "cancelled";
+                    createdAt: string;
+                    customer: {
+                        name: string | null;
+                        phone: string | null;
+                    } | null;
+                    address: {
+                        mahalla: string;
+                        house: string;
+                        landmark: string | null;
+                    } | null;
+                    items: {
+                        id: number;
+                        nameSnapshot: string;
+                        /** @enum {string} */
+                        unit: "kg" | "dona";
+                        qty: string;
+                        /** @enum {string} */
+                        fallback: "substitute" | "skip" | "call";
+                        itemNote: string | null;
+                        /** @enum {string} */
+                        itemStatus: "pending" | "bought" | "substituted" | "skipped";
+                    }[];
+                    grandTotalUzs: number;
+                    cashToCollectUzs: number;
+                    refundDeltaUzs: number;
+                    allowedTransitions: ("accepted" | "shopping" | "on_the_way" | "delivered" | "cancelled")[];
+                }[];
+            }[];
+        };
+        UploadResultDto: {
+            url: string;
         };
     };
     responses: never;
@@ -63,6 +1053,1307 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["HealthResponseDto"];
                 };
+            };
+        };
+    };
+    MeController_getMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MeController_updateMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProfileDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MeController_listAddresses: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AddressDto"][];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MeController_createAddress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateAddressDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AddressDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MeController_deleteAddress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MeController_updateAddress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateAddressDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AddressDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MeController_listFavorites: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FavoriteDto"][];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MeController_addFavorite: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddFavoriteDto"];
+            };
+        };
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MeController_removeFavorite: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                productId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminAuthController_login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AdminLoginDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccessTokenDto"];
+                };
+            };
+        };
+    };
+    AdminAuthController_refresh: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccessTokenDto"];
+                };
+            };
+        };
+    };
+    AdminAuthController_logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminAuthController_me: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminMeDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CatalogController_categories: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryDto"][];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CatalogController_products: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductDto"][];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CatalogController_product: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CatalogController_search: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductDto"][];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CatalogController_wish: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateWishDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WishDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    SlotsController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SlotsResponseDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    OrdersController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrderSummaryDto"][];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    OrdersController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateOrderDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrderDetailDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    OrdersController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrderDetailDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    OrdersController_reorder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReorderPreviewDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    OrdersController_rate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RateOrderDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RatingDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired Telegram initData */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminOrdersController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminOrderSummaryDto"][];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminOrdersController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminOrderDetailDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminOrdersController_updateStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateOrderStatusDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminOrderDetailDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminOrdersController_updateItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+                itemId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateOrderItemDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminOrderDetailDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminPricingController_board: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DailyPriceBoardDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminPricingController_bulkUpsert: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BulkDailyPriceDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DailyPriceBoardDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminProductsController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminProductDto"][];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminProductsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateProductDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminProductDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminProductsController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminProductDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminProductsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminProductsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProductDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminProductDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminCategoriesController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminCategoryDto"][];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminCategoriesController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCategoryDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminCategoryDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminCategoriesController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminCategoryDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminCategoriesController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminCategoriesController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCategoryDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminCategoryDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminSlotsController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminSlotDto"][];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminSlotsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSlotDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminSlotDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminSlotsController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminSlotDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminSlotsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminSlotsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateSlotDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminSlotDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminRouteController_route: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RouteBoardDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminUploadsController_upload: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UploadResultDto"];
+                };
+            };
+            /** @description Missing, invalid, or expired admin access token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

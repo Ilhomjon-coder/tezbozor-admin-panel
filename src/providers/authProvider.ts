@@ -1,24 +1,61 @@
 import type { AuthProvider } from '@refinedev/core';
+import { ApiError, apiFetch, refreshAccessToken } from '../api/http';
+import { clearAccessToken, getAccessToken, setAccessToken } from '../api/tokenStore';
+import { text } from '../i18n/uz';
 
-// Phase 0 STUB auth — no real backend authentication yet.
-// Any login succeeds and sets a local flag so the route guard works and the
-// login -> dashboard -> logout flow is demonstrable. Phase 2 replaces this with
-// the real JWT access + opaque refresh flow (see docs/contracts.md -> Auth).
-const STORAGE_KEY = 'tezbozor-admin-auth';
-
+// Real admin auth (docs/contracts.md → Auth): POST /admin/auth/login returns a
+// short-lived access token (kept in memory) and sets the httpOnly refresh cookie.
+// check() silently re-mints the access token from the cookie after a reload; the
+// apiFetch 401 interceptor rotates it during a session. logout revokes server-side.
 export const authProvider: AuthProvider = {
-  login: async () => {
-    localStorage.setItem(STORAGE_KEY, 'stub');
-    return { success: true, redirectTo: '/' };
+  login: async ({ username, password }) => {
+    try {
+      // allowRetry=false: a 401 here means bad credentials, not an expired token.
+      const { accessToken } = await apiFetch<{ accessToken: string }>(
+        '/admin/auth/login',
+        { method: 'POST', body: JSON.stringify({ username, password }) },
+        false,
+      );
+      setAccessToken(accessToken);
+      return { success: true, redirectTo: '/' };
+    } catch {
+      return {
+        success: false,
+        error: { name: text.auth.failedTitle, message: text.auth.failedMessage },
+      };
+    }
   },
+
   logout: async () => {
-    localStorage.removeItem(STORAGE_KEY);
+    try {
+      await apiFetch('/admin/auth/logout', { method: 'POST' }, false);
+    } catch {
+      /* clearing the local token below is enough even if the revoke call fails */
+    }
+    clearAccessToken();
     return { success: true, redirectTo: '/login' };
   },
-  check: async () =>
-    localStorage.getItem(STORAGE_KEY)
-      ? { authenticated: true }
-      : { authenticated: false, redirectTo: '/login' },
-  getIdentity: async () => ({ id: 1, name: 'Operator' }),
-  onError: async () => ({}),
+
+  check: async () => {
+    if (getAccessToken()) return { authenticated: true };
+    // No in-memory token (e.g. after a reload) — try the refresh cookie.
+    const rotated = await refreshAccessToken();
+    return rotated ? { authenticated: true } : { authenticated: false, redirectTo: '/login' };
+  },
+
+  getIdentity: async () => {
+    try {
+      const me = await apiFetch<{ id: number; username: string }>('/admin/auth/me');
+      return { id: me.id, name: me.username };
+    } catch {
+      return null;
+    }
+  },
+
+  onError: async (error) => {
+    if (error instanceof ApiError && error.status === 401) {
+      return { logout: true, redirectTo: '/login', error };
+    }
+    return {};
+  },
 };
