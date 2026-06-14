@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Baked into the static build at compile time (Vite).
-      VITE_API_BASE_URL: https://api.tezbozor.uz/api
+      VITE_API_BASE_URL: https://tezbozor-api.kesha.uz/api
     steps:
       - uses: actions/checkout@v4
 
