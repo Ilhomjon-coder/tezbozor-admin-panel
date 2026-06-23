@@ -15,6 +15,7 @@ import {
   SafetyCertificateOutlined,
   SettingOutlined,
   ShoppingCartOutlined,
+  ShoppingOutlined,
   TagsOutlined,
   TeamOutlined,
 } from '@ant-design/icons';
@@ -52,6 +53,7 @@ import { RoleCreatePage } from './pages/roles/create';
 import { RoleEditPage } from './pages/roles/edit';
 import { CustomersListPage } from './pages/customers/list';
 import { WishesListPage } from './pages/wishes/list';
+import { ShoppingListPage } from './pages/shopping-list';
 
 export default function App() {
   return (
@@ -89,6 +91,11 @@ function ThemedApp() {
                 name: 'route',
                 list: '/route',
                 meta: { label: text.nav.route, icon: <CarOutlined /> },
+              },
+              {
+                name: 'shopping-list',
+                list: '/shopping-list',
+                meta: { label: text.nav.shoppingList, icon: <ShoppingOutlined /> },
               },
               {
                 name: 'products',
@@ -168,6 +175,7 @@ function ThemedApp() {
                 <Route path="/orders/:id" element={<OrderShowPage />} />
 
                 <Route path="/route" element={<RoutePage />} />
+                <Route path="/shopping-list" element={<ShoppingListPage />} />
 
                 <Route path="/products" element={<ProductsListPage />} />
                 <Route path="/products/new" element={<ProductCreatePage />} />

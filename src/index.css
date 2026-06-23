@@ -30,3 +30,18 @@ h4,
 h5 {
   font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
 }
+
+/* Printing the shopping list: drop the app chrome + controls, plain ink on white. */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .ant-layout-sider,
+  .ant-layout-header {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+}

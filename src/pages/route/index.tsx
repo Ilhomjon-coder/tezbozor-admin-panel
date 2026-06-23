@@ -5,7 +5,14 @@ import { ApiError, apiFetch } from '../../api/http';
 import type { OrderStatus, RouteBoard, RouteOrder } from '../../api/types';
 import { formatQty, formatSom, todayTashkent } from '../../lib/format';
 import { brand, ctaTheme } from '../../theme';
-import { itemStatusLabel, orderStatusColor, orderStatusLabel, text, unitLabel } from '../../i18n/uz';
+import {
+  itemFallbackLabel,
+  itemStatusLabel,
+  orderStatusColor,
+  orderStatusLabel,
+  text,
+  unitLabel,
+} from '../../i18n/uz';
 
 const { Title, Text } = Typography;
 
@@ -78,6 +85,18 @@ export const RoutePage = () => {
     }
   };
 
+  // Dedicated mark-delivered (gated route.mark_delivered) so a field agent — who
+  // has no orders.update_status — can close out a delivery from the route page.
+  const markDelivered = async (orderId: number) => {
+    try {
+      await apiFetch(`/admin/route/${orderId}/delivered`, { method: 'POST' });
+      message.success(text.orders.statusUpdated);
+      await load(date);
+    } catch (e) {
+      message.error(e instanceof ApiError ? e.message : text.common.error);
+    }
+  };
+
   return (
     <div style={{ maxWidth: 560, margin: '0 auto' }}>
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
@@ -99,6 +118,15 @@ export const RoutePage = () => {
             {text.common.refresh}
           </Button>
         </Space>
+
+        {board && !loading ? (
+          <Card size="small" styles={{ body: { padding: '10px 14px' } }}>
+            <Text type="secondary">{text.route.dayCashTotal}: </Text>
+            <Text strong style={{ color: brand.green, fontSize: 16 }}>
+              {formatSom(board.dayCashTotalUzs)}
+            </Text>
+          </Card>
+        ) : null}
 
         {loading ? (
           <div style={{ textAlign: 'center', padding: 48 }}>
@@ -133,6 +161,7 @@ export const RoutePage = () => {
                     onUp={() => move(slot.id, o.id, -1)}
                     onDown={() => move(slot.id, o.id, 1)}
                     onTransition={(to) => void transition(o.id, to)}
+                    onDeliver={() => void markDelivered(o.id)}
                   />
                 ))}
               </div>
@@ -151,6 +180,7 @@ const RouteCard = ({
   onUp,
   onDown,
   onTransition,
+  onDeliver,
 }: {
   order: RouteOrder;
   isFirst: boolean;
@@ -158,6 +188,7 @@ const RouteCard = ({
   onUp: () => void;
   onDown: () => void;
   onTransition: (to: OrderStatus) => void;
+  onDeliver: () => void;
 }) => {
   const canDeliver = order.allowedTransitions.includes('delivered');
   const forward = order.allowedTransitions.find((t) => t !== 'cancelled' && t !== 'delivered');
@@ -179,6 +210,13 @@ const RouteCard = ({
             )}
           </div>
           <Text type="secondary">{order.customer?.name ?? ''}</Text>
+          {order.customerNote ? (
+            <div>
+              <Text type="secondary" style={{ fontSize: 12 }}>
+                📝 {order.customerNote}
+              </Text>
+            </div>
+          ) : null}
         </div>
         <Space direction="vertical" size={2}>
           <Button size="small" icon={<ArrowUpOutlined />} disabled={isFirst} onClick={onUp} aria-label={text.route.moveUp} />
@@ -195,6 +233,18 @@ const RouteCard = ({
                 ({itemStatusLabel[it.itemStatus]})
               </Text>
             )}
+            {/* Flag the B-variant only when it isn't the default substitute. */}
+            {it.fallback !== 'substitute' && (
+              <Tag color="orange" style={{ marginLeft: 6 }}>
+                {itemFallbackLabel[it.fallback]}
+              </Tag>
+            )}
+            {it.itemNote ? (
+              <Text type="secondary" style={{ fontSize: 12 }}>
+                {' '}
+                · {it.itemNote}
+              </Text>
+            ) : null}
           </li>
         ))}
       </ul>
@@ -211,7 +261,7 @@ const RouteCard = ({
           )}
           {canDeliver ? (
             <ConfigProvider theme={ctaTheme}>
-              <Button type="primary" onClick={() => onTransition('delivered')}>
+              <Button type="primary" onClick={onDeliver}>
                 {text.route.deliver}
               </Button>
             </ConfigProvider>

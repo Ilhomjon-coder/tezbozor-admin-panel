@@ -110,6 +110,8 @@ export const text = {
     moveDown: 'Pastga',
     cashLine: 'Naqd',
     delivered: 'Yetkazilgan',
+    dayCashTotal: 'Kunlik naqd jami',
+    note: 'Izoh',
     ordersInSlot: (n: number) => `${n} ta buyurtma`,
   },
   products: {
