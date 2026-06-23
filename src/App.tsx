@@ -10,8 +10,11 @@ import {
   CarOutlined,
   ClockCircleOutlined,
   DollarOutlined,
+  SafetyCertificateOutlined,
+  SettingOutlined,
   ShoppingCartOutlined,
   TagsOutlined,
+  TeamOutlined,
 } from '@ant-design/icons';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
@@ -21,6 +24,7 @@ import { ColorModeProvider, useColorMode } from './providers/color-mode';
 import { Header } from './components/Header';
 import { Title } from './components/Title';
 import { authProvider } from './providers/authProvider';
+import { accessControlProvider } from './providers/access';
 import { dataProvider } from './api/dataProvider';
 import { text } from './i18n/uz';
 
@@ -38,6 +42,12 @@ import { CategoryEditPage } from './pages/categories/edit';
 import { SlotsListPage } from './pages/slots/list';
 import { SlotCreatePage } from './pages/slots/create';
 import { SlotEditPage } from './pages/slots/edit';
+import { AdminsListPage } from './pages/admins/list';
+import { AdminCreatePage } from './pages/admins/create';
+import { AdminEditPage } from './pages/admins/edit';
+import { RolesListPage } from './pages/roles/list';
+import { RoleCreatePage } from './pages/roles/create';
+import { RoleEditPage } from './pages/roles/edit';
 
 export default function App() {
   return (
@@ -56,6 +66,7 @@ function ThemedApp() {
           <Refine
             dataProvider={dataProvider}
             authProvider={authProvider}
+            accessControlProvider={accessControlProvider}
             routerProvider={routerBindings}
             notificationProvider={useNotificationProvider}
             resources={[
@@ -96,6 +107,28 @@ function ThemedApp() {
                 edit: '/slots/:id/edit',
                 meta: { label: text.nav.slots, icon: <ClockCircleOutlined /> },
               },
+              // Administration group (auto-hidden by accessControl for users
+              // without the perms).
+              {
+                name: 'administration',
+                meta: { label: text.nav.administration, icon: <SettingOutlined /> },
+              },
+              {
+                name: 'admins',
+                list: '/admins',
+                create: '/admins/new',
+                edit: '/admins/:id/edit',
+                meta: { label: text.nav.admins, icon: <TeamOutlined />, parent: 'administration' },
+              },
+              {
+                name: 'roles',
+                list: '/roles',
+                create: '/roles/new',
+                edit: '/roles/:id/edit',
+                meta: { label: text.nav.roles, icon: <SafetyCertificateOutlined />, parent: 'administration' },
+              },
+              // Read-only catalog used by the role editor; not shown in the menu.
+              { name: 'permissions' },
             ]}
             options={{
               syncWithLocation: true,
@@ -133,6 +166,14 @@ function ThemedApp() {
                 <Route path="/slots" element={<SlotsListPage />} />
                 <Route path="/slots/new" element={<SlotCreatePage />} />
                 <Route path="/slots/:id/edit" element={<SlotEditPage />} />
+
+                <Route path="/admins" element={<AdminsListPage />} />
+                <Route path="/admins/new" element={<AdminCreatePage />} />
+                <Route path="/admins/:id/edit" element={<AdminEditPage />} />
+
+                <Route path="/roles" element={<RolesListPage />} />
+                <Route path="/roles/new" element={<RoleCreatePage />} />
+                <Route path="/roles/:id/edit" element={<RoleEditPage />} />
               </Route>
 
               <Route

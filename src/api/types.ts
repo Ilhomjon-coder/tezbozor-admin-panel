@@ -25,6 +25,15 @@ export type AdminProduct = S['AdminProductDto'];
 export type AdminCategory = S['AdminCategoryDto'];
 export type AdminSlot = S['AdminSlotDto'];
 
+export type AdminUser = S['AdminUserDto'];
+export type Role = S['RoleDto'];
+export type Permission = S['PermissionDto'];
+export type AdminCustomer = S['AdminCustomerDto'];
+export type AdminWish = S['AdminWishDto'];
+export type ShoppingList = S['ShoppingListDto'];
+export type ShoppingCategory = ShoppingList['categories'][number];
+export type ShoppingItem = ShoppingCategory['items'][number];
+
 export type OrderStatus = AdminOrderDetail['status'];
 export type ItemStatus = AdminOrderItem['itemStatus'];
 export type ItemFallback = AdminOrderItem['fallback'];

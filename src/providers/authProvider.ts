@@ -1,6 +1,7 @@
 import type { AuthProvider } from '@refinedev/core';
 import { ApiError, apiFetch, refreshAccessToken } from '../api/http';
 import { clearAccessToken, getAccessToken, setAccessToken } from '../api/tokenStore';
+import { currentClaims } from './access';
 import { text } from '../i18n/uz';
 
 // Real admin auth (docs/contracts.md → Auth): POST /admin/auth/login returns a
@@ -45,12 +46,18 @@ export const authProvider: AuthProvider = {
 
   getIdentity: async () => {
     try {
-      const me = await apiFetch<{ id: number; username: string }>('/admin/auth/me');
-      return { id: me.id, name: me.username };
+      const me = await apiFetch<{ id: number; username: string; role: string | null; permissions: string[] }>(
+        '/admin/auth/me',
+      );
+      return { id: me.id, name: me.username, role: me.role, permissions: me.permissions };
     } catch {
       return null;
     }
   },
+
+  // Used by Refine's <CanAccess> / useCan via the accessControlProvider indirectly;
+  // also handy for ad-hoc checks. Resolved from the access token.
+  getPermissions: async () => currentClaims().perms,
 
   onError: async (error) => {
     if (error instanceof ApiError && error.status === 401) {

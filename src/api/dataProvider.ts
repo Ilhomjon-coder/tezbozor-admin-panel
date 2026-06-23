@@ -31,6 +31,11 @@ const RESOURCE_PATHS: Record<string, string> = {
   products: '/admin/products',
   categories: '/admin/categories',
   slots: '/admin/slots',
+  admins: '/admin/admins',
+  roles: '/admin/roles',
+  permissions: '/admin/permissions',
+  customers: '/admin/customers',
+  wishes: '/admin/wishes',
 };
 
 function pathFor(resource: string): string {
