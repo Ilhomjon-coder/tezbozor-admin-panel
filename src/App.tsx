@@ -16,7 +16,10 @@ import {
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
 import '@refinedev/antd/dist/reset.css';
-import { antdTheme } from './theme';
+import { buildTheme } from './theme';
+import { ColorModeProvider, useColorMode } from './providers/color-mode';
+import { Header } from './components/Header';
+import { Title } from './components/Title';
 import { authProvider } from './providers/authProvider';
 import { dataProvider } from './api/dataProvider';
 import { text } from './i18n/uz';
@@ -38,8 +41,17 @@ import { SlotEditPage } from './pages/slots/edit';
 
 export default function App() {
   return (
+    <ColorModeProvider>
+      <ThemedApp />
+    </ColorModeProvider>
+  );
+}
+
+function ThemedApp() {
+  const { mode } = useColorMode();
+  return (
     <BrowserRouter>
-      <ConfigProvider theme={antdTheme}>
+      <ConfigProvider theme={buildTheme(mode)}>
         <AntdApp>
           <Refine
             dataProvider={dataProvider}
@@ -95,7 +107,7 @@ export default function App() {
               <Route
                 element={
                   <Authenticated key="authenticated-routes" fallback={<CatchAllNavigate to="/login" />}>
-                    <ThemedLayoutV2>
+                    <ThemedLayoutV2 Header={Header} Title={Title}>
                       <Outlet />
                     </ThemedLayoutV2>
                   </Authenticated>

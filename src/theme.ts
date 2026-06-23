@@ -1,4 +1,5 @@
-import type { ThemeConfig } from 'antd';
+import { theme as antdAlgorithms, type ThemeConfig } from 'antd';
+import type { ColorMode } from './providers/color-mode';
 
 // Brand tokens — values copied verbatim from the design system
 // (tgbot/designs/design-system/tokens/colors.css + typography.css), the
@@ -24,29 +25,34 @@ export const brand = {
   fontHeading: "'Montserrat', system-ui, -apple-system, sans-serif",
 } as const;
 
-// Global AntD theme. colorPrimary = brand green; info/success forced green and
-// warning/error to brand orange/red so no AntD blue leaks in.
-export const antdTheme: ThemeConfig = {
-  token: {
-    colorPrimary: brand.green,
-    colorInfo: brand.green,
-    colorSuccess: brand.green,
-    colorWarning: brand.orange,
-    colorError: brand.danger,
-    colorLink: brand.greenDark,
-    colorTextBase: brand.ink900,
-    colorBgLayout: brand.paper,
-    fontFamily: brand.fontBody,
-    borderRadius: 10,
-  },
-  components: {
-    Layout: {
-      bodyBg: brand.paper,
-      headerBg: brand.card,
-      siderBg: brand.card,
+// Global AntD theme, built per color mode. colorPrimary = brand green;
+// info/success forced green and warning/error to brand orange/red so no AntD
+// blue leaks in (brandbook). In light mode we pin the warm paper surfaces; in
+// dark mode we let theme.darkAlgorithm own the neutrals and only keep the brand
+// accents, so contrast stays correct.
+export function buildTheme(mode: ColorMode): ThemeConfig {
+  const dark = mode === 'dark';
+  return {
+    algorithm: dark ? antdAlgorithms.darkAlgorithm : antdAlgorithms.defaultAlgorithm,
+    token: {
+      colorPrimary: brand.green,
+      colorInfo: brand.green,
+      colorSuccess: brand.green,
+      colorWarning: brand.orange,
+      colorError: brand.danger,
+      colorLink: dark ? brand.green : brand.greenDark,
+      fontFamily: brand.fontBody,
+      borderRadius: 10,
+      // Warm paper surfaces only make sense on the light theme.
+      ...(dark ? {} : { colorTextBase: brand.ink900, colorBgLayout: brand.paper }),
     },
-  },
-};
+    components: {
+      Layout: dark
+        ? {} // darkAlgorithm provides correct dark layout surfaces
+        : { bodyBg: brand.paper, headerBg: brand.card, siderBg: brand.card },
+    },
+  };
+}
 
 // Scoped theme for primary-action buttons (login submit, key CTAs): orange.
 // Wrap a button in <ConfigProvider theme={ctaTheme}> to make it the "tez" CTA.

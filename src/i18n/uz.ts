@@ -9,6 +9,9 @@ export const text = {
   app: {
     title: 'Tezbozor',
     subtitle: 'Boshqaruv paneli',
+    role: 'Administrator', // generic until RBAC (WS2) puts a real role on the identity
+    menu: 'Menyu',
+    themeTooltip: 'Mavzu — yorug‘ / qorong‘i',
   },
   nav: {
     dailyPrices: 'Kunlik narxlar',

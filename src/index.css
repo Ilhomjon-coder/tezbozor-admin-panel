@@ -12,8 +12,15 @@ body,
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: #faf7f2; /* --paper */
+  background: #faf7f2; /* --paper (light) */
   color: #1e2a32; /* --ink-900 */
+}
+
+/* Dark mode — the page frame behind the AntD layout (set by ColorModeProvider).
+   Matches AntD darkAlgorithm's container neutral so there is no flash mismatch. */
+body[data-theme='dark'] {
+  background: #141414;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 h1,
