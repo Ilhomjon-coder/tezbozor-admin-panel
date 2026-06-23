@@ -60,6 +60,13 @@ export const RoutePage = () => {
     void load(date);
   }, [date, load]);
 
+  // Refresh the board when connectivity returns (WS3 §3e graceful offline).
+  useEffect(() => {
+    const onOnline = () => void load(date);
+    window.addEventListener('online', onOnline);
+    return () => window.removeEventListener('online', onOnline);
+  }, [date, load]);
+
   const move = (slotId: number, orderId: number, dir: -1 | 1) => {
     setSeq((prev) => {
       const cur = [...(prev[slotId] ?? [])];

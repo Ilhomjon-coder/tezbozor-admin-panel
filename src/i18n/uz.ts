@@ -50,6 +50,7 @@ export const text = {
     refresh: 'Yangilash',
     loading: 'Yuklanmoqda…',
     error: 'Xatolik yuz berdi',
+    offline: 'Internet aloqasi yo‘q — oxirgi ma’lumotlar ko‘rsatilmoqda',
     empty: 'Hozircha bo‘sh',
     date: 'Sana',
     actions: 'Amallar',

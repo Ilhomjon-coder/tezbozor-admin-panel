@@ -1,0 +1,16 @@
+{
+  "name": "Tezbozor — Boshqaruv paneli",
+  "short_name": "Tezbozor",
+  "description": "Tezbozor operator paneli — buyurtmalar, narxlar, marshrut, bozorlik.",
+  "lang": "uz",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FAF7F2",
+  "theme_color": "#1FA055",
+  "icons": [
+    { "src": "/pwa-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

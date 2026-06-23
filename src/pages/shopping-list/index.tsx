@@ -47,6 +47,13 @@ export const ShoppingListPage = () => {
     void load(date);
   }, [date, load]);
 
+  // Refresh the buy-list when connectivity returns (WS3 §3e graceful offline).
+  useEffect(() => {
+    const onOnline = () => void load(date);
+    window.addEventListener('online', onOnline);
+    return () => window.removeEventListener('online', onOnline);
+  }, [date, load]);
+
   const markBought = async (productId: number) => {
     try {
       await apiFetch('/admin/shopping-list/mark-bought', {

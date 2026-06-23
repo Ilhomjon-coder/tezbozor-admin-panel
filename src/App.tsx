@@ -26,6 +26,7 @@ import { buildTheme } from './theme';
 import { ColorModeProvider, useColorMode } from './providers/color-mode';
 import { Header } from './components/Header';
 import { Title } from './components/Title';
+import { OfflineBanner } from './components/OfflineBanner';
 import { authProvider } from './providers/authProvider';
 import { accessControlProvider } from './providers/access';
 import { dataProvider } from './api/dataProvider';
@@ -69,6 +70,7 @@ function ThemedApp() {
     <BrowserRouter>
       <ConfigProvider theme={buildTheme(mode)}>
         <AntdApp>
+          <OfflineBanner />
           <Refine
             dataProvider={dataProvider}
             authProvider={authProvider}
