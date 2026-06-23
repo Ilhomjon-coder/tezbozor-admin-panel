@@ -66,18 +66,36 @@ export function refreshAccessToken(): Promise<boolean> {
   return refreshing;
 }
 
-export async function apiFetch<T>(path: string, init: RequestInit = {}, allowRetry = true): Promise<T> {
+// Fetch with the one-shot 401→refresh→retry, returning the raw Response so
+// callers can read headers (e.g. X-Total-Count for paginated lists).
+async function fetchWithRetry(path: string, init: RequestInit, allowRetry: boolean): Promise<Response> {
   let res = await rawFetch(path, init);
-
   if (res.status === 401 && allowRetry) {
     const rotated = await refreshAccessToken();
     if (rotated) res = await rawFetch(path, init);
   }
+  return res;
+}
 
-  if (!res.ok) {
-    const body = await res.json().catch(() => undefined);
-    throw new ApiError(res.status, messageFrom(body, res.status), body);
-  }
+async function throwForStatus(res: Response): Promise<never> {
+  const body = await res.json().catch(() => undefined);
+  throw new ApiError(res.status, messageFrom(body, res.status), body);
+}
+
+export async function apiFetch<T>(path: string, init: RequestInit = {}, allowRetry = true): Promise<T> {
+  const res = await fetchWithRetry(path, init, allowRetry);
+  if (!res.ok) await throwForStatus(res);
   if (res.status === 204) return undefined as T;
   return (await res.json()) as T;
+}
+
+// List fetch: returns the array body + the total from the X-Total-Count header
+// (WS2 §2c convention; falls back to the array length for pre-2c endpoints).
+export async function apiList<T>(path: string): Promise<{ data: T[]; total: number }> {
+  const res = await fetchWithRetry(path, {}, true);
+  if (!res.ok) await throwForStatus(res);
+  const data = (await res.json()) as T[];
+  const header = res.headers.get('X-Total-Count');
+  const total = header != null && header !== '' ? Number(header) : Array.isArray(data) ? data.length : 0;
+  return { data, total };
 }

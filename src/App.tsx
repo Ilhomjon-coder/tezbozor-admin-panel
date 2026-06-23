@@ -7,8 +7,10 @@ import routerBindings, {
 import { App as AntdApp, ConfigProvider } from 'antd';
 import {
   AppstoreOutlined,
+  BulbOutlined,
   CarOutlined,
   ClockCircleOutlined,
+  ContactsOutlined,
   DollarOutlined,
   SafetyCertificateOutlined,
   SettingOutlined,
@@ -48,6 +50,8 @@ import { AdminEditPage } from './pages/admins/edit';
 import { RolesListPage } from './pages/roles/list';
 import { RoleCreatePage } from './pages/roles/create';
 import { RoleEditPage } from './pages/roles/edit';
+import { CustomersListPage } from './pages/customers/list';
+import { WishesListPage } from './pages/wishes/list';
 
 export default function App() {
   return (
@@ -106,6 +110,16 @@ function ThemedApp() {
                 create: '/slots/new',
                 edit: '/slots/:id/edit',
                 meta: { label: text.nav.slots, icon: <ClockCircleOutlined /> },
+              },
+              {
+                name: 'customers',
+                list: '/customers',
+                meta: { label: text.nav.customers, icon: <ContactsOutlined /> },
+              },
+              {
+                name: 'wishes',
+                list: '/wishes',
+                meta: { label: text.nav.wishes, icon: <BulbOutlined /> },
               },
               // Administration group (auto-hidden by accessControl for users
               // without the perms).
@@ -166,6 +180,9 @@ function ThemedApp() {
                 <Route path="/slots" element={<SlotsListPage />} />
                 <Route path="/slots/new" element={<SlotCreatePage />} />
                 <Route path="/slots/:id/edit" element={<SlotEditPage />} />
+
+                <Route path="/customers" element={<CustomersListPage />} />
+                <Route path="/wishes" element={<WishesListPage />} />
 
                 <Route path="/admins" element={<AdminsListPage />} />
                 <Route path="/admins/new" element={<AdminCreatePage />} />

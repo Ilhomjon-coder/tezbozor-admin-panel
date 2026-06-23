@@ -2,7 +2,6 @@ import type {
   BaseRecord,
   CreateParams,
   CreateResponse,
-  CrudFilters,
   CustomParams,
   CustomResponse,
   DataProvider,
@@ -17,7 +16,7 @@ import type {
   UpdateParams,
   UpdateResponse,
 } from '@refinedev/core';
-import { API_URL, apiFetch } from './http';
+import { API_URL, apiFetch, apiList } from './http';
 
 // A small custom data provider over our auth-aware apiFetch. We own both ends of
 // the contract, so there is no pagination protocol to satisfy: admin lists are
@@ -44,29 +43,36 @@ function pathFor(resource: string): string {
   return path;
 }
 
-// Translate Refine's "eq" filters into query params (the only operator our admin
-// lists use: orders by date/status/slotId, slots by date).
-function queryFromFilters(filters?: CrudFilters): string {
-  if (!filters?.length) return '';
-  const params = new URLSearchParams();
-  for (const f of filters) {
-    if ('field' in f && f.operator === 'eq' && f.value !== undefined && f.value !== null && f.value !== '') {
-      params.set(f.field, String(f.value));
+// Map Refine's list request → our backend query convention (WS2 §2c):
+//   filters → ?field=value   (the field name IS the backend param: date/status/
+//             slotId/search/categoryId/isActive — any operator is flattened)
+//   sorters → ?sort=field:order   (single sort)
+//   pagination → ?page&pageSize   (omitted when mode 'off' ⇒ full list)
+function buildListQuery({ filters, sorters, pagination }: GetListParams): string {
+  const q = new URLSearchParams();
+  for (const f of filters ?? []) {
+    if ('field' in f && f.value !== undefined && f.value !== null && f.value !== '') {
+      q.set(f.field, String(f.value));
     }
   }
-  const qs = params.toString();
-  return qs ? `?${qs}` : '';
+  const sorter = sorters?.[0];
+  if (sorter) q.set('sort', `${sorter.field}:${sorter.order}`);
+  if (pagination && pagination.mode !== 'off' && pagination.current && pagination.pageSize) {
+    q.set('page', String(pagination.current));
+    q.set('pageSize', String(pagination.pageSize));
+  }
+  const s = q.toString();
+  return s ? `?${s}` : '';
 }
 
 export const dataProvider: DataProvider = {
   getApiUrl: () => API_URL,
 
-  getList: async <TData extends BaseRecord = BaseRecord>({
-    resource,
-    filters,
-  }: GetListParams): Promise<GetListResponse<TData>> => {
-    const data = await apiFetch<TData[]>(`${pathFor(resource)}${queryFromFilters(filters)}`);
-    return { data, total: data.length };
+  getList: async <TData extends BaseRecord = BaseRecord>(
+    params: GetListParams,
+  ): Promise<GetListResponse<TData>> => {
+    const { data, total } = await apiList<TData>(`${pathFor(params.resource)}${buildListQuery(params)}`);
+    return { data, total };
   },
 
   getOne: async <TData extends BaseRecord = BaseRecord>({
